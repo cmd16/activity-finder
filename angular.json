@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "activity-finder"
+    }
+  },
+  "defaultProject": "activity-finder",
+  "cli": {
+    "analytics": "1703ca05-c75e-4b37-a4ba-fdb839ea49ce"
+  }
 }
