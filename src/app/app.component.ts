@@ -9,11 +9,7 @@ import { ActivityDataService } from './services/activity-data.service';
 export class AppComponent {
   title = 'activity-finder';
 
-  constructor(public dataService: ActivityDataService) {
+  constructor(private dataService: ActivityDataService) {
 
-  }
-
-  updateFromHardcode() {
-    this.dataService.updateFromHardcode();
   }
 }
