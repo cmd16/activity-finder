@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+
 export interface Activity {
   name: string;
   description: string;
@@ -33,105 +35,109 @@ export interface ActivityFilter {
 })
 export class ActivityDataService {
 
-  private activities: Activity[];
+  private activities_hardcoded: Activity[];
+  activities: Activity[] = [];
+  private activityCollection: AngularFirestoreCollection;
 
-  constructor() {
-    this.activities = [
-      {
-        name: "All (Wikipedia) Roads Lead to Rome",
-        description: "As a group, choose one target article you will all try to reach. \
-        Then, each person clicks the 'Random article' button at the same time and it's a race to reach the target article by following links. \
-        You can only go forward - once you click a link, no going back.",
-        variations: "After reaching the target article, navigate somewhere else (your original article, another player's article, etc.)",
-        minParticipants: 2,
-        minTime: 5,
-        links: ["https://en.wikipedia.org/wiki/Main_Page"],
-        sync: true,
-        competitive: true,
-        platform: ["audio call"],
-        category: ["game"]
-      }, {
-        name: "One Word Story",
-        description: "Take turns each writing one word to form a story.",
-        variations: "Longer chunks (sentences, paragraphs, etc.).",
-        minParticipants: 2,
-        sync: false,
-        competitive: false,
-        platform: ["chat"],
-        category: ["writing"]
-      }, {
-        name: "Random Word Generator",
-        description: "Use a random word generator to find inspiration for writing or art. Everyone acts on the same prompt.",
-        minParticipants: 2,
-        sync: true,
-        competitive: false,
-        platform: ["video call"],
-        category: ["writing", "art"]
-      }, {
-        name: "Watch Movies or Listen to Music",
-        description: "Many sites and tools allow you to watch or listen to things together.",
-        variations: "Add a game onto it (e.g., if watching Legally Blonde, do a push-up every time 'blonde' is said).",
-        sync: true,
-        competitive: false,
-        minParticipants: 2,
-        links: ["https://www.watch2gether.com/", "https://chrome.google.com/webstore/detail/netflix-party-is-now-tele/oocalimimngaihdkbihfgmpkcpnmlaoa?hl=en"],
-        platform: ["online", "video call", "audio call"],
-        category: ["movie", "music"],
-      }, {
-        name: "Award Show",
-        description: "Make an award show in which you choose the categories and vote on the winners. To enhance the atmosphere, music and fancy outfits are recommended.",
-        sync: true,
-        competitive: true,
-        minParticipants: 4,
-        platform: ["video call"],
-        category: ["video call"],
-      }, {
-        name: "Mad Libs",
-        description: "Play mad libs, the game in which other people fill in blanks without knowing the context and then you read the funny story!",
-        variations: "Create your own! One player writes the story, and the other players fill in the blanks.",
-        sync: true,
-        competitive: false,
-        minParticipants: 2,
-        links: ["https://www.madlibs.com/"],
-        platform: ["video call", "audio call"],
-        category: ["game", "writing"]
-      }, {
-        name: "Mad Lib Theater",
-        description: "Like mad libs, but rather than a story, you're filling in a script. \
+  constructor(private db: AngularFirestore) {
+    this.activities_hardcoded = [{
+      name: "One Word Story",
+      description: "Take turns each writing one word to form a story.",
+      variations: "Longer chunks (sentences, paragraphs, etc.).",
+      minParticipants: 2,
+      sync: false,
+      competitive: false,
+      platform: ["chat"],
+      category: ["writing"]
+    }, {
+      name: "Random Word Generator",
+      description: "Use a random word generator to find inspiration for writing or art. Everyone acts on the same prompt.",
+      minParticipants: 2,
+      sync: true,
+      competitive: false,
+      platform: ["video call"],
+      category: ["writing", "art"]
+    }, {
+      name: "Watch Movies or Listen to Music",
+      description: "Many sites and tools allow you to watch or listen to things together.",
+      variations: "Add a game onto it (e.g., if watching Legally Blonde, do a push-up every time 'blonde' is said).",
+      sync: true,
+      competitive: false,
+      minParticipants: 2,
+      links: ["https://www.watch2gether.com/", "https://chrome.google.com/webstore/detail/netflix-party-is-now-tele/oocalimimngaihdkbihfgmpkcpnmlaoa?hl=en"],
+      platform: ["online", "video call", "audio call"],
+      category: ["movie", "music"],
+    }, {
+      name: "Award Show",
+      description: "Make an award show in which you choose the categories and vote on the winners. To enhance the atmosphere, music and fancy outfits are recommended.",
+      sync: true,
+      competitive: true,
+      minParticipants: 4,
+      platform: ["video call"],
+      category: ["video call"],
+    }, {
+      name: "Mad Libs",
+      description: "Play mad libs, the game in which other people fill in blanks without knowing the context and then you read the funny story!",
+      variations: "Create your own! One player writes the story, and the other players fill in the blanks.",
+      sync: true,
+      competitive: false,
+      minParticipants: 2,
+      links: ["https://www.madlibs.com/"],
+      platform: ["video call", "audio call"],
+      category: ["game", "writing"]
+    }, {
+      name: "Mad Lib Theater",
+      description: "Like mad libs, but rather than a story, you're filling in a script. \
         One person writes/finds the script, one or more people fill in the blanks, and two or more people act out the script (having never seen it before).",
-        sync: true,
-        competitive: false,
-        minParticipants: 4,
-        links: ["https://www.youtube.com/watch?v=kM9Wuzj4k24"],
-        platform: ["video call", "audio call"],
-        category: ["game", "acting", "writing"]
-      }, {
-        name: "Create a Gallery Photo",
-        description: "Take advantage of the box format of video call to work together to make a cool picture. Follow the link for some inspiration.",
-        sync: true,
-        competitive: false,
-        minParticipants: 2,
-        links: ["https://imgur.com/gallery/1xSI8zB"],
-        platform: ["video call"],
-        category: ["video call", "art"],
-      }, {
-        name: "PowerPoint Party",
-        description: "Each person creates a funny PowerPoint (Google Slides, etc.) presentation. \
+      sync: true,
+      competitive: false,
+      minParticipants: 4,
+      links: ["https://www.youtube.com/watch?v=kM9Wuzj4k24"],
+      platform: ["video call", "audio call"],
+      category: ["game", "acting", "writing"]
+    }, {
+      name: "Create a Gallery Photo",
+      description: "Take advantage of the box format of video call to work together to make a cool picture. Follow the link for some inspiration.",
+      sync: true,
+      competitive: false,
+      minParticipants: 2,
+      links: ["https://imgur.com/gallery/1xSI8zB"],
+      platform: ["video call"],
+      category: ["video call", "art"],
+    }, {
+      name: "PowerPoint Party",
+      description: "Each person creates a funny PowerPoint (Google Slides, etc.) presentation. \
         Then, each person is assigned another person's presentation (which they have never seen before) to present.",
-        sync: true,
-        competitive: false,
-        platform: ["video call", "online"],
-        category: ["video call"],
-      },
+      sync: true,
+      competitive: false,
+      platform: ["video call", "online"],
+      category: ["video call"],
+    },
     ];
+
+    this.activityCollection = this.db.collection<Activity>("activities");
+    this.activityCollection.valueChanges().subscribe(result => {
+      this.activities = [];
+      result.forEach((item: Activity) => {
+        this.activities.push(item);
+      });
+    });
+
   }
 
   public getActivities() {
-    return this.activities;
+    return this.activities_hardcoded;
+  }
+
+  public updateFromHardcode() {
+    console.log("updating database from hardcode");
+    for (let i = 0; i < this.activities_hardcoded.length; i++) {
+      this.activityCollection.add(this.activities_hardcoded[i]);
+    }
   }
 
   public addActivity(activity: Activity) {
-    this.activities.push(activity);
+    this.activities_hardcoded.push(activity);
   }
 
   private listItemInCommon(list1: string[], list2: string[]) {
@@ -143,7 +149,7 @@ export class ActivityDataService {
   }
 
   public getActivitiesWithFilter(filt: ActivityFilter) {
-    return this.activities.filter((item) => {
+    return this.activities_hardcoded.filter((item) => {
       return (!filt.name || item.name.includes(filt.name)) &&
         (!filt.description || item.description.includes(filt.description)) &&
         (!filt.minParticipants || item.minParticipants <= filt.minParticipants) &&
