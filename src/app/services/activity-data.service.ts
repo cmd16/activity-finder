@@ -18,6 +18,7 @@ export interface Activity {
 }
 
 export interface ActivityFilter {
+  type: string; //type indicates wether or not empty filter
   name: string;
   description: string;
   minParticipants: number;
