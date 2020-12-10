@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { ActivityDataService } from './services/activity-data.service';
+import { Activity } from './services/activity-data.service'
+
 
 @Component({
   selector: 'app-root',
@@ -9,7 +12,12 @@ import { ActivityDataService } from './services/activity-data.service';
 export class AppComponent {
   title = 'activity-finder';
 
-  constructor(private dataService: ActivityDataService) {
+  constructor(public dataService: ActivityDataService) {
 
+  }
+
+  public showDialog()
+  {
+    console.log("foo");
   }
 }

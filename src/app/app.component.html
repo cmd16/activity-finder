@@ -1,1 +1,10 @@
-<h1>Activity Finder</h1>
+<h1 class="title">
+    Activity Finder
+</h1>
+<button mat-raised-button color="primary" class="add-activity" (click)=showDialog()>
+    add activity
+</button>
+<mat-accordion *ngFor="let activity of dataService.activities">
+    <app-activity-card [activityObject]="activity"></app-activity-card>
+</mat-accordion>
+

@@ -35,7 +35,7 @@ export interface ActivityFilter {
 })
 export class ActivityDataService {
 
-  private activities: Activity[] = [];
+  public activities: Activity[] = [];
   private activityCollection: AngularFirestoreCollection;
 
   constructor(private db: AngularFirestore) {
