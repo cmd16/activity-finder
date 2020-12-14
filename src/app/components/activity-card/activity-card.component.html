@@ -5,7 +5,9 @@
         </mat-card-title> 
     </mat-expansion-panel-header>
     <mat-card-subtitle> 
-        Min Participants: {{activityObject.minParticipants}} <br> 
+        <div  *ngIf="activityObject.minParticipants != undefined">
+            Min Participants: {{activityObject.minParticipants}} <br> 
+        </div>
     </mat-card-subtitle>
     <mat-card-subtitle>
         <div  *ngIf="activityObject.maxParticipants != undefined">
@@ -45,8 +47,6 @@
             Platforms: {{activityObject.platform}} <br>
         </div>
     </mat-card-subtitle>
-
-    <!-- TODO: ngFor / hyperlink -->
     <mat-card-subtitle>
         <div  *ngIf="activityObject.links != undefined">
             Links:

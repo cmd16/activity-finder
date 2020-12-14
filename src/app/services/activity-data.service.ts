@@ -82,6 +82,7 @@ export class ActivityDataService {
         });
       });
     });
+    
   }
 
   public addActivity(activity: Activity) {

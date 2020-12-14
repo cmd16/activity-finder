@@ -1,0 +1,52 @@
+<h1>
+    Add Activity:
+</h1>
+<h2>
+    '*' denotes a required field
+</h2>
+
+<form>
+    <label>* Name:</label>
+    <input type="text" [(ngModel)]="name" [ngModelOptions]="{standalone: true}"><br><br>
+
+    <label>* Description:</label>
+    <input type="text" [(ngModel)]="desc" [ngModelOptions]="{standalone: true}"><br><br>
+
+    <label>* Check this box if this activity is synchronous:</label>
+    <input type="checkbox" [(ngModel)]="sync" [ngModelOptions]="{standalone: true}"><br><br>
+
+    <label>* Check this box if this activity is competitive:</label>
+    <input type="checkbox" [(ngModel)]="comp" [ngModelOptions]="{standalone: true}"><br><br>
+
+    <label>* Platforms (comma separated list (video, voice call, ...)):</label>
+    <input type="text" [(ngModel)]="plat" [ngModelOptions]="{standalone: true}"><br><br>
+    
+    <label>* Categories (comma separated list (game, artwork, ...)):</label>
+    <input type="text" [(ngModel)]="cat" [ngModelOptions]="{standalone: true}"><br><br>
+
+    <label>Variations:</label>
+    <input type="text" [(ngModel)]="vari" [ngModelOptions]="{standalone: true}"><br><br>
+
+    <label>Min Participants:</label>
+    <input type="number" [(ngModel)]="minPar" [ngModelOptions]="{standalone: true}"><br><br>
+
+    <label>Max Participants:</label>
+    <input type="number" [(ngModel)]="maxPar" [ngModelOptions]="{standalone: true}"><br><br>
+
+    <label>Min time:</label>
+    <input type="number" [(ngModel)]="minT" [ngModelOptions]="{standalone: true}"><br><br>
+
+    <label>Max time:</label>
+    <input type="number" [(ngModel)]="maxT" [ngModelOptions]="{standalone: true}"><br><br>
+
+    <label>Links (comma separated list (https://link1.com, https://link2.com ...)):</label>
+    <input type="text" [(ngModel)]="links" [ngModelOptions]="{standalone: true}"><br><br>
+</form>
+
+<h2>
+    {{message}}
+</h2>
+
+<button mat-raised-button class="add-activity" (click)=save()>
+    add activity!
+</button>

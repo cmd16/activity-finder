@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { ActivityDataService } from './services/activity-data.service';
 import { Activity } from './services/activity-data.service'
+import { MatDialog } from '@angular/material/dialog';
+import {AddActivityDialogComponent} from './add-activity-dialog/add-activity-dialog.component';
 
 
 @Component({
@@ -12,12 +14,12 @@ import { Activity } from './services/activity-data.service'
 export class AppComponent {
   title = 'activity-finder';
 
-  constructor(public dataService: ActivityDataService) {
+  constructor(public dataService: ActivityDataService, public dialog: MatDialog) {
 
   }
 
   public showDialog()
   {
-    console.log("foo");
+    this.dialog.open(AddActivityDialogComponent);
   }
 }

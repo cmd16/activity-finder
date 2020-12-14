@@ -14,12 +14,17 @@ import { ActivityCardComponent } from './components/activity-card/activity-card.
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { environment } from "src/environments/environment";
 import {MatExpansionModule} from '@angular/material/expansion';
+import {MatDialogModule} from '@angular/material/dialog';
+import { AddActivityDialogComponent } from './add-activity-dialog/add-activity-dialog.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ActivityCardComponent
+    ActivityCardComponent,
+    AddActivityDialogComponent
   ],
+  entryComponents: [AddActivityDialogComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -29,6 +34,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
     MatCardModule,
     MatIconModule,
     MatExpansionModule,
+    MatDialogModule,
+    FormsModule,
 
   ],
   providers: [],
