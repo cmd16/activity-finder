@@ -1,0 +1,71 @@
+<mat-expansion-panel class="card1">
+    <mat-expansion-panel-header>
+        <mat-card-title class="title"> 
+            {{activityObject.name}} 
+        </mat-card-title> 
+    </mat-expansion-panel-header>
+    <mat-card-subtitle> 
+        <div  *ngIf="activityObject.minParticipants != undefined">
+            Min Participants: {{activityObject.minParticipants}} <br> 
+        </div>
+    </mat-card-subtitle>
+    <mat-card-subtitle>
+        <div  *ngIf="activityObject.maxParticipants != undefined">
+            Max Participants: {{activityObject.maxParticipants}} <br>
+        </div>
+    </mat-card-subtitle>
+    <mat-card-subtitle>
+        <div  *ngIf="activityObject.minTime != undefined">
+            Min Time: {{activityObject.minTime}} <br>
+        </div>
+    </mat-card-subtitle>
+    <mat-card-subtitle>
+        <div  *ngIf="activityObject.maxTime != undefined">
+            Max Time: {{activityObject.maxTime}} <br>
+        </div>
+    </mat-card-subtitle>
+    <mat-card-subtitle>
+        Competitive: {{activityObject.competitive}} <br>
+    </mat-card-subtitle>
+    <mat-card-subtitle>
+        <div  *ngIf="activityObject.category != undefined">
+            Categories: {{activityObject.category}} <br>
+        </div>
+    </mat-card-subtitle>
+    <mat-card-subtitle>
+        <div  *ngIf="activityObject.variations != undefined">
+            Variations: {{activityObject.variations}} <br>
+        </div>
+    </mat-card-subtitle>
+    <mat-card-subtitle>
+        <div  *ngIf="activityObject.sync != undefined">
+            Synchronous: {{activityObject.sync}} <br>
+        </div>
+    </mat-card-subtitle>
+    <mat-card-subtitle>
+        <div  *ngIf="activityObject.platform != undefined">
+            Platforms: {{activityObject.platform}} <br>
+        </div>
+    </mat-card-subtitle>
+    <mat-card-subtitle>
+        <div  *ngIf="activityObject.links != undefined">
+            Links:
+            <div *ngFor="let link of activityObject.links">
+                 <a href={{link}}> {{link}} </a>
+            </div> <br>
+        </div>
+    </mat-card-subtitle>
+    <p>
+    </p>
+    <mat-card-content>
+        {{activityObject.description}}
+    </mat-card-content>
+</mat-expansion-panel> 
+
+<!-- mat-card-content could be expansion panel-->
+<!-- <mat-icon>insert_emoticon</mat-icon> -->
+<!--   
+
+  minTime?: number;  // minutes
+  maxTime?: number;  // minutes
+ -->
