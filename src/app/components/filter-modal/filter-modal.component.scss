@@ -1,0 +1,51 @@
+$mdc-theme-primary: #111B41;
+$mdc-theme-on-primary: #BCD2EE;
+$mdc-theme-secondary: #EE0290;
+
+.mat-card {
+    background-color: $mdc-theme-primary;
+    margin: auto;
+
+}
+
+.button{
+    color: adjust-color($color: #000000);
+    border-radius: 2em;
+    padding: 1em;
+
+}
+
+.section-header{
+
+    font-family: Arial, Helvetica, sans-serif;
+    color: $mdc-theme-on-primary ;
+    width: 50%;
+}
+
+.searchbox{
+    border-radius: 1em;
+    background: $mdc-theme-on-primary;
+    margin:0.5em;
+    padding:1em;
+}
+
+.filter{
+    border-radius: 1em;
+    background: $mdc-theme-on-primary;
+    margin:0.5em;
+    padding:1em;
+
+}
+
+.checkbox{
+    color: $mdc-theme-secondary;
+
+}
+
+.slider{
+    color: $mdc-theme-secondary;
+    margin: 1em;
+    padding: 0.5em;
+}
+
+

@@ -1,60 +1,68 @@
-<div class="webpage">
+<mat-card>
 
-    <div class="header">
-        <h1>Activity Finder</h1>
-        <h2> What kind of activity are you looking for?</h2>
+    <div class=section-header>
+        <h1>Search by Name</h1>
+    </div>
+
+    <div class="searchbox">
+        <mat-form-field class="name">
+            <mat-label> I'm looking for ...</mat-label>
+            <input matInput placeholder="Ex. skribbl.io" [(ngModel)]="name">
+        </mat-form-field>
+    </div>
+
+    <div class=section-header>
+        <h1> Or Filter By Criteria</h1>
     </div>
 
     <div class="filter">
+        <div class="filter-selections">
+            <button mat-raised-button (onClick)="resetFilter()">Reset/Show All</button>
+        </div>
 
-        <button>Reset & Show All</button>
-
-        <div class="radio">
-            <div class="competitive">
-                <input type="radio" id=competitive value="competitive">
-                <label for="competitive">Competitive</label><br>
-            </div>
-
-            <div class="synchronous">
-                <input type="radio" id=synchronous value="synchronous">
-                <label for="synchronous">Synchronous</label><br>
-            </div>
-
+        <div class="slider">
+            <h3>How may players are there?</h3>
+            <ngx-slider [(value)]="minParticipants" [(highValue)]="maxParticipants" [options]="options">
+            </ngx-slider>
+            <h3> How much time do you have?</h3>
+            <ngx-slider [(value)]="minTime" [(highValue)]="maxTime" [options]="options2">
+            </ngx-slider>
         </div>
 
         <div class="checkbox">
-
-            <div class="catogory">
-                <h3>What catagories of games are you looking for?</h3> <br>
-                <h3>How to get options from database?</h3>
-
-                <input type="checkbox" name="option1" value="option1">
-                <label for="option2"> first option</label><br>
-
-                <input type="checkbox" name="option2" value="option2">
-                <label for="option2"> second option</label><br>
-
-                <input type="checkbox" name="option2" value="option2">
-                <label for="option2"> second option</label><br>
-
-            </div>
+            <mat-checkbox [(ngModel)]="competitive">Competitive</mat-checkbox>
+            <br>
+            <mat-checkbox [(ngModel)]="synch">Synchronous</mat-checkbox>
         </div>
 
-        <div class="dropdowns">
-
-            <div class="time">
-                <h3>Choose How much time do you have?</h3>
-
-                <div class="choice">
-
-                </div>
-
-            </div>
+        <div class="categories">
+            <select [(ngModel)]="categories">
+                <option *ngFor="let opt of categoryChoices">{{opt}}</option>
+            </select>
         </div>
+
+        <button mat-raised-button (onClick)="save()">Filter</button>
 
     </div>
+</mat-card>
 
-    <!-- <p> Somewhere need {{Activity}} and [(ngModel)]?</p> -->
+<div>
+    Results
+    <br>
+    Search: {{name}}
+    <br>
+    MinPlayers: {{minParticipants}}
+    <br>
+    MaxPlayers: {{maxParticipants}}
+    <br>
+    minTime: {{minTime}}
+    <br>
+    maxTime: {{maxTime}}
+    <br>
+    Competitive: {{competitive}}
+    <br>
+    Synchronous: {{synch}}
+    <br>
+    Catagory: {{catagories}}
 
-    {{ngModel}}
-    local and public variable
+</div>
