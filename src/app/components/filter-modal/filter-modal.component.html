@@ -1,13 +1,13 @@
 <mat-card>
 
     <div class=section-header>
-        <h1>Search by Name</h1>
+        <h1>Search by Name and/or Description</h1>
     </div>
 
     <div class="searchbox">
         <mat-form-field class="name">
             <mat-label> I'm looking for ...</mat-label>
-            <input matInput placeholder="Ex. skribbl.io" [(ngModel)]="name">
+            <input matInput placeholder="Ex. skribbl.io" [(ngModel)]="activityFilter.nameOrDescriptionQuery">
         </mat-form-field>
     </div>
 
@@ -17,31 +17,34 @@
 
     <div class="filter">
         <div class="filter-selections">
-            <button mat-raised-button (onClick)="resetFilter()">Reset/Show All</button>
+            <button mat-raised-button (click)="resetFilter()">Reset/Show All</button>
         </div>
 
         <div class="slider">
             <h3>How may players are there?</h3>
-            <ngx-slider [(value)]="minParticipants" [(highValue)]="maxParticipants" [options]="options">
+            <ngx-slider [(value)]="activityFilter.minParticipants" [(highValue)]="activityFilter.maxParticipants"
+                [options]="options">
             </ngx-slider>
             <h3> How much time do you have?</h3>
-            <ngx-slider [(value)]="minTime" [(highValue)]="maxTime" [options]="options2">
+            <ngx-slider [(value)]="activityFilter.minTime" [(highValue)]="activityFilter.maxTime" [options]="options2">
             </ngx-slider>
         </div>
 
         <div class="checkbox">
-            <mat-checkbox [(ngModel)]="competitive">Competitive</mat-checkbox>
+            <mat-checkbox [(ngModel)]="activityFilter.competitive">Competitive</mat-checkbox>
             <br>
-            <mat-checkbox [(ngModel)]="synch">Synchronous</mat-checkbox>
+            <mat-checkbox [(ngModel)]="activityFilter.sync">Synchronous</mat-checkbox>
         </div>
 
         <div class="categories">
-            <select [(ngModel)]="categories">
-                <option *ngFor="let opt of categoryChoices">{{opt}}</option>
+            <select [(ngModel)]="activityFilter.category">
+                <option *ngFor="let opt of dataService.categories">{{opt}}</option>
             </select>
         </div>
 
-        <button mat-raised-button (onClick)="save()">Filter</button>
+        <button mat-raised-button (click)="save()">Filter</button>
+
+
 
     </div>
 </mat-card>
@@ -49,20 +52,20 @@
 <div>
     Results
     <br>
-    Search: {{name}}
+    Search: {{activityFilter.nameOrDescriptionQuery}}
     <br>
-    MinPlayers: {{minParticipants}}
+    MinPlayers: {{activityFilter.minParticipants}}
     <br>
-    MaxPlayers: {{maxParticipants}}
+    MaxPlayers: {{activityFilter.maxParticipants}}
     <br>
-    minTime: {{minTime}}
+    minTime: {{activityFilter.minTime}}
     <br>
-    maxTime: {{maxTime}}
+    maxTime: {{activityFilter.maxTime}}
     <br>
-    Competitive: {{competitive}}
+    Competitive: {{activityFilter.competitive}}
     <br>
-    Synchronous: {{synch}}
+    Synchronous: {{activityFilter.sync}}
     <br>
-    Catagory: {{catagories}}
+    Category: {{activityFilter.category}}
 
 </div>

@@ -18,7 +18,6 @@ export interface Activity {
 }
 
 export interface ActivityFilter {
-  type: string; //type indicates wether or not empty filter
   name: string;
   minParticipants: number;
   maxParticipants: number;
@@ -83,7 +82,7 @@ export class ActivityDataService {
         });
       });
     });
-    
+
   }
 
   public addActivity(activity: Activity) {
@@ -114,5 +113,38 @@ export class ActivityDataService {
         (!filt.nameOrDescriptionQuery || item.name.toLowerCase().includes(filt.nameOrDescriptionQuery.toLowerCase()) ||
           item.description.toLowerCase().includes(filt.nameOrDescriptionQuery.toLowerCase()));
     })
+  }
+
+  public createEmptyFilter(): ActivityFilter {
+    return {
+      name: undefined,
+      minParticipants: 2,
+      maxParticipants: 20,
+      minTime: 5,
+      maxTime: 60,
+      sync: undefined,
+      competitive: undefined,
+      platform: undefined,
+      category: undefined,
+      nameQuery: undefined,
+      descriptionQuery: undefined,
+      nameOrDescriptionQuery: undefined,
+    }
+  }
+
+  public clearFilter(input: ActivityFilter) {
+
+    input.minParticipants = 2;
+    input.maxParticipants = 20;
+    input.minTime = 5;
+    input.maxTime = 60;
+    input.sync = undefined;
+    input.competitive = undefined;
+    input.platform = undefined;
+    input.category = undefined;
+    input.nameQuery = undefined;
+    input.descriptionQuery = undefined;
+    input.nameOrDescriptionQuery = undefined;
+
   }
 }
