@@ -37,6 +37,8 @@ export class FilterModalComponent {
 
   // function to save filter settings and passing to view-log page
   save() {
+    console.log(this.activityFilter);
+    this.dataService.filterActivities(this.activityFilter);
   }
 }
 

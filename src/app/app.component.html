@@ -9,6 +9,6 @@
 <button mat-raised-button class="add-activity" (click)=showDialog()>
     add activity
 </button>
-<mat-accordion *ngFor="let activity of dataService.activities">
+<mat-accordion *ngFor="let activity of dataService.filteredActivities">
     <app-activity-card [activityObject]="activity"></app-activity-card>
 </mat-accordion>

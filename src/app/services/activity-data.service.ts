@@ -38,6 +38,7 @@ export interface ActivityFilter {
 export class ActivityDataService {
 
   public activities: Activity[] = [];
+  public filteredActivities: Activity[] = [];
   private activityCollection: AngularFirestoreCollection;
   public categories: string[] = [];
   public platforms: string[] = [];
@@ -81,6 +82,7 @@ export class ActivityDataService {
           }
         });
       });
+      this.filteredActivities = this.activities;
     });
 
   }
@@ -97,13 +99,14 @@ export class ActivityDataService {
     }
   }
 
-  public getActivitiesWithFilter(filt: ActivityFilter) {
-    return this.activities.filter((item) => {
+  public filterActivities(filt: ActivityFilter) {
+    this.filteredActivities = this.activities.filter((item) => {
+      //return true;
       return (!filt.name || (item.name.toLowerCase() === filt.name.toLowerCase())) &&
-        (!filt.minParticipants || item.minParticipants <= filt.minParticipants) &&
-        (!filt.maxParticipants || item.maxParticipants >= filt.maxParticipants) &&
-        (!filt.minTime || item.minTime <= filt.minTime) &&
-        (!filt.maxTime || item.maxTime >= filt.maxTime) &&
+        (!item.minParticipants || item.minParticipants >= filt.minParticipants) &&
+        (!item.maxParticipants || item.maxParticipants <= filt.maxParticipants) &&
+        (!item.minTime || item.minTime >= filt.minTime) &&
+        (!item.maxTime || item.maxTime <= filt.maxTime) &&
         (filt.sync == null || item.sync === filt.sync) &&
         (filt.competitive == null || item.competitive === filt.competitive) &&
         (!filt.platform || this.listItemInCommon(filt.platform, item.platform)) &&
@@ -111,24 +114,24 @@ export class ActivityDataService {
         (!filt.nameQuery || item.name.toLowerCase().includes(filt.nameQuery.toLowerCase())) &&
         (!filt.descriptionQuery || item.description.toLowerCase().includes(filt.descriptionQuery.toLowerCase())) &&
         (!filt.nameOrDescriptionQuery || item.name.toLowerCase().includes(filt.nameOrDescriptionQuery.toLowerCase()) ||
-          item.description.toLowerCase().includes(filt.nameOrDescriptionQuery.toLowerCase()));
+        item.description.toLowerCase().includes(filt.nameOrDescriptionQuery.toLowerCase()));
     })
   }
 
   public createEmptyFilter(): ActivityFilter {
     return {
-      name: undefined,
+      name: null,
       minParticipants: 2,
       maxParticipants: 20,
       minTime: 5,
       maxTime: 60,
-      sync: undefined,
-      competitive: undefined,
-      platform: undefined,
-      category: undefined,
-      nameQuery: undefined,
-      descriptionQuery: undefined,
-      nameOrDescriptionQuery: undefined,
+      sync: null,
+      competitive: null,
+      platform: null,
+      category: null,
+      nameQuery: null,
+      descriptionQuery: null,
+      nameOrDescriptionQuery: null,
     }
   }
 
@@ -145,6 +148,7 @@ export class ActivityDataService {
     input.nameQuery = undefined;
     input.descriptionQuery = undefined;
     input.nameOrDescriptionQuery = undefined;
-
+    
+    this.filteredActivities = this.activities;
   }
 }
