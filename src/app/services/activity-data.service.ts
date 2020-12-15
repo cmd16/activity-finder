@@ -18,18 +18,18 @@ export interface Activity {
 }
 
 export interface ActivityFilter {
-  name: string;
+  name: string;  // exact match
   minParticipants: number;
   maxParticipants: number;
   minTime: number;
   maxTime: number;
   sync: boolean;
   competitive: boolean;
-  platform: string[];
-  category: string[];
-  nameQuery: string;
-  descriptionQuery: string;
-  nameOrDescriptionQuery: string;
+  platform: string[];  // activity must have at least one of these
+  category: string[];  // activity must have at least one of these
+  nameQuery: string;  // includes
+  descriptionQuery: string;  // includes
+  nameOrDescriptionQuery: string;  // includes
 }
 
 @Injectable({
@@ -47,6 +47,7 @@ export class ActivityDataService {
   public minTime: number;
   public maxTime: number;
 
+  // get records from database, get info about the collection overall (e.g., list of all categories)
   constructor(private db: AngularFirestore) {
     this.activityCollection = this.db.collection<Activity>("activities");
     this.activityCollection.valueChanges().subscribe(result => {
@@ -91,17 +92,19 @@ export class ActivityDataService {
     this.activityCollection.add(activity);
   }
 
+  // find if at least one item from list2 is also in list 1
   private listItemInCommon(list1: string[], list2: string[]) {
     for (let i = 0; i < list2.length; i++) {
       if (list1.includes(list2[i])) {
         return true;
       }
     }
+    return false
   }
 
+  // filter activities given a filter object. Filter only on the fields that are defined
   public filterActivities(filt: ActivityFilter) {
     this.filteredActivities = this.activities.filter((item) => {
-      //return true;
       return (!filt.name || (item.name.toLowerCase() === filt.name.toLowerCase())) &&
         (!item.minParticipants || item.minParticipants >= filt.minParticipants) &&
         (!item.maxParticipants || item.maxParticipants <= filt.maxParticipants) &&
@@ -118,6 +121,7 @@ export class ActivityDataService {
     })
   }
 
+  // create an empty filter
   public createEmptyFilter(): ActivityFilter {
     return {
       name: null,
@@ -135,8 +139,9 @@ export class ActivityDataService {
     }
   }
 
+  // clear the fields of an existing filter
   public clearFilter(input: ActivityFilter) {
-
+    // hardcode values for min/max participants and min/max time so that we can bind to the UI without problems
     input.minParticipants = 2;
     input.maxParticipants = 20;
     input.minTime = 5;
@@ -152,6 +157,7 @@ export class ActivityDataService {
     this.filteredActivities = this.activities;
   }
 
+  // clear everything except search; for use when searching
   public clearAllButSearch(input: ActivityFilter) {
     input.minParticipants = 2;
     input.maxParticipants = 20;
