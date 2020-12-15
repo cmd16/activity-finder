@@ -35,8 +35,15 @@ export class FilterModalComponent {
     console.log("test");
   }
 
+
   // function to save filter settings and passing to view-log page
   save() {
+    console.log(this.activityFilter);
+    this.dataService.filterActivities(this.activityFilter);
+  }
+
+  search() {
+    this.dataService.clearAllButSearch(this.activityFilter);
     console.log(this.activityFilter);
     this.dataService.filterActivities(this.activityFilter);
   }

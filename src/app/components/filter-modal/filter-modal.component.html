@@ -9,6 +9,7 @@
             <mat-label> I'm looking for ...</mat-label>
             <input matInput placeholder="Ex. skribbl.io" [(ngModel)]="activityFilter.nameOrDescriptionQuery">
         </mat-form-field>
+        <button mat-raised-button (click)="search()"> Find </button>
     </div>
 
     <div class=section-header>
@@ -21,7 +22,7 @@
         </div>
 
         <div class="slider">
-            <h3>How may players are there?</h3>
+            <h3>How many players are there?</h3>
             <ngx-slider [(value)]="activityFilter.minParticipants" [(highValue)]="activityFilter.maxParticipants"
                 [options]="options">
             </ngx-slider>
@@ -49,7 +50,7 @@
     </div>
 </mat-card>
 
-<div>
+<!-- <div>
     Results
     <br>
     Search: {{activityFilter.nameOrDescriptionQuery}}
@@ -68,4 +69,4 @@
     <br>
     Category: {{activityFilter.category}}
 
-</div>
+</div> -->

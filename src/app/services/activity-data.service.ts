@@ -151,4 +151,15 @@ export class ActivityDataService {
     
     this.filteredActivities = this.activities;
   }
+
+  public clearAllButSearch(input: ActivityFilter) {
+    input.minParticipants = 2;
+    input.maxParticipants = 20;
+    input.minTime = 5;
+    input.maxTime = 60;
+    input.sync = undefined;
+    input.competitive = undefined;
+    input.platform = undefined;
+    input.category = undefined;
+  }
 }
