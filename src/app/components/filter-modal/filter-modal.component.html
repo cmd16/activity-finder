@@ -26,7 +26,7 @@
             <ngx-slider [(value)]="activityFilter.minParticipants" [(highValue)]="activityFilter.maxParticipants"
                 [options]="options">
             </ngx-slider>
-            <h3> How much time do you have?</h3>
+            <h3> How many minutes do you have?</h3>
             <ngx-slider [(value)]="activityFilter.minTime" [(highValue)]="activityFilter.maxTime" [options]="options2">
             </ngx-slider>
         </div>
@@ -38,8 +38,16 @@
         </div>
 
         <div class="categories">
+            <mat-label>Category</mat-label>
             <select [(ngModel)]="activityFilter.category">
                 <option *ngFor="let opt of dataService.categories">{{opt}}</option>
+            </select>
+        </div>
+
+        <div class="platform">
+            <mat-label>Platform: </mat-label>            
+            <select [(ngModel)]="activityFilter.platform">
+                <option *ngFor="let opt of dataService.platforms">{{opt}}</option>
             </select>
         </div>
 
