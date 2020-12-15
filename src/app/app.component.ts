@@ -6,10 +6,6 @@ import { MatDialog } from '@angular/material/dialog';
 import {AddActivityDialogComponent} from './add-activity-dialog/add-activity-dialog.component';
 
 
-
-
-
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -21,7 +17,9 @@ export class AppComponent {
   constructor(public dataService: ActivityDataService, public dialog: MatDialog) {
 
   }
-
+  /**
+   * Shows the add activity dialog when add activity button is clicked. 
+   */
   public showDialog()
   {
     this.dialog.open(AddActivityDialogComponent);
